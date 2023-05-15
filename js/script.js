@@ -9,9 +9,9 @@ document.addEventListener('DOMContentLoaded', function()  {
         row_div.style.height = 'auto';
         for(let column = 0; column < 16; column++) {
             const box = document.createElement('div');
-            box.style.width = '50px';
-            box.style.height = '50px';
-            box.style.border = '1px solid black';
+            box.style.width = '20px';
+            box.style.height = '20px';
+            box.style.border = '1px dashed grey';
             box.className = 'box';
             row_div.appendChild(box);
         }
