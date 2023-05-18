@@ -9,13 +9,24 @@
     <script src="./js/script.js"></script>
 </head>
 <body>
-    <h1>Etch-a-Sketch</h1>
+    <div class="circle"></div>
     <div>
-        <div>
-            <input type="range" min="1" max="100" value="16" id="slider">
-            <p>Value: <span id="sliderValue">16</span></p>
+        <div id="title-container">
+            <p class="alternative-title" style="padding-right: 10px">Magic</p>
+            <h1 id="title">Etch-a-Sketch</h1>
+            <p style="padding: 0 0 20px 5px">®</p>
+            <p class="alternative-title" style="padding-left: 10px">Screen</p>
         </div>
-        <div id="etchCanvas" style="width: 960px; height: 960px"></div>
+        <div id="canvas-container">
+            <div id="etchCanvas" style="width: 960px; height: 960px"></div>
+        </div>
+        <div id="slider-container">
+            <input type="checkbox" id="toggleRNGColors">
+            <p style="margin-right:10px">Rainbow Mode</p>
+            <input type="range" min="1" max="100" value="16" id="slider">
+            <p >Block Size: <span id="sliderValue">16</span></p>
+        </div>
     </div>
+    <div class="circle"></div>
 </body>
 </html>

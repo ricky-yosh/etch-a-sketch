@@ -1,3 +1,17 @@
+const randomColor = () => {
+    const randomR = Math.floor(Math.random() * 256);
+    const randomG = Math.floor(Math.random() * 256);
+    const randomB = Math.floor(Math.random() * 256);
+    const opacity = 0; // white initially
+
+    const returnString = `rgba(${randomR}, ${randomG}, ${randomB}, ${opacity})`;
+    return returnString;
+}
+
+const extractBGColor = (elementInput) => {
+    const bgColor = elementInput.style.backgroundColor;
+    return bgColor;
+}
 
 const canvasCreator = (size) => {
     // canvas creation
@@ -16,19 +30,57 @@ const canvasCreator = (size) => {
             box.style.width = faceSize + 'px';
             box.style.height = faceSize + 'px';
             box.style.boxSizing = 'border-box';
-            box.style.border = '1px dashed grey';
             box.className = 'box';
-            
-            box.addEventListener('mousedown', function() {
-                isDrawing = true;
-                box.style.backgroundColor = 'black';
+            box.style.backgroundColor = randomColor();
+            let rainbowMode;
+
+            const checkbox = document.querySelector('#toggleRNGColors');
+            checkbox.addEventListener('change', () => {
+                if (checkbox.checked) {
+                    rainbowMode = true;
+                } else {
+                    rainbowMode = false;
+                }
             });
-            box.addEventListener('mouseup', function() {
+
+            const backgroundColor = extractBGColor(box);
+            const startIndex = backgroundColor.indexOf('(') + 1;
+            const endIndex = backgroundColor.indexOf(')') + 1;
+            const colorValues = backgroundColor.substring(startIndex, endIndex);
+            const colorValuesArray = colorValues.split(',');
+
+            const redValue = parseInt(colorValuesArray[0].trim(), 10);
+            const greenValue = parseInt(colorValuesArray[1].trim(), 10);
+            const blueValue = parseInt(colorValuesArray[2].trim(), 10);
+            let alphaValue = parseFloat(colorValuesArray[3].trim());
+
+            // let isDrawing;
+            let newBackgroundColor;
+
+            box.addEventListener('mousedown', () => {
+                isDrawing = true;
+                if(rainbowMode) {
+                    alphaValue += .1;
+                    alphaValue.toString();
+                    newBackgroundColor = `rgba(${redValue}, ${greenValue}, ${blueValue}, ${alphaValue})`;
+                } else {
+                    newBackgroundColor = 'rgba(0, 0, 0, 1)';
+                }
+                box.style.backgroundColor = newBackgroundColor;
+            });
+            box.addEventListener('mouseup', () => {
                 isDrawing = false;
             });
             box.addEventListener('mouseover', () => {
                 if (isDrawing) {
-                    box.style.backgroundColor = 'black';
+                    if(rainbowMode) {
+                        alphaValue += .1;
+                        alphaValue.toString();
+                        newBackgroundColor = `rgba(${redValue}, ${greenValue}, ${blueValue}, ${alphaValue})`;
+                    } else {
+                        newBackgroundColor = 'rgba(0, 0, 0, 1)';
+                    }
+                    box.style.backgroundColor = newBackgroundColor;
                 }
             });
             row_div.appendChild(box);
